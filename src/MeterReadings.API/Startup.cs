@@ -1,5 +1,7 @@
 using MeterReadings.Business;
 using MeterReadings.Business.CSV;
+using MeterReadings.Database;
+using MeterReadings.Database.Sqlite;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -21,7 +23,11 @@ namespace MeterReadings.API
         {
             services.AddControllers();
             services.AddSwaggerGen();
-            services.AddSingleton<IMeterReadingProcessor>(new CSVMeterReadingProcessor());
+            services.AddSingleton<IMeterReadingProcessor, CSVMeterReadingProcessor>();
+            services.AddSingleton<IMeterReadingReader, CSVMeterReadingReader>();
+            services.AddSingleton<IMeterReadingParser, CSVMeterReadingParser>();
+            services.AddSingleton<IMeterReadingSaver, CSVMeterReadingSaver>();
+            services.AddSingleton<IRepository, SqliteRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

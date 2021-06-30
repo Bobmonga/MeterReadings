@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MeterReadings.Business\MeterReadings.Business.csproj" />
+    <ProjectReference Include="..\MeterReadings.Database.Sqlite\MeterReadings.Database.Sqlite.csproj" />
   </ItemGroup>
 
 
