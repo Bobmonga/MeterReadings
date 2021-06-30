@@ -1,11 +1,10 @@
 ﻿using MeterReadings.Database.Models;
 using System.Collections.Generic;
-using System.IO;
 
 namespace MeterReadings.Business
 {
-    public interface IMeterReadingProcessor
+    public interface IMeterReadingParser
     {
-        MeterReadingResponse Process(Stream fileSteam);
+        List<MeterReading> Parse(List<string> rawReadings);
     }
 }

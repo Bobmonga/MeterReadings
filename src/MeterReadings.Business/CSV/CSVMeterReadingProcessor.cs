@@ -1,23 +1,37 @@
-﻿using System.Collections.Generic;
+﻿using MeterReadings.Database.Models;
+using System.Collections.Generic;
 using System.IO;
-using System.Threading.Tasks;
+using System.Linq;
 
 namespace MeterReadings.Business.CSV
 {
     public class CSVMeterReadingProcessor : IMeterReadingProcessor
     {
-        private readonly IMeterReadingReader meterReadingReader;
+        private readonly IMeterReadingReader _meterReadingReader;
+        private readonly IMeterReadingParser _meterReadingParser;
+        private readonly IMeterReadingSaver _meterReadingSaver;
 
-        public CSVMeterReadingProcessor()
+        public CSVMeterReadingProcessor(IMeterReadingReader meterReadingReader, IMeterReadingParser meterReadingParser, IMeterReadingSaver meterReadingSaver)
         {
-            meterReadingReader = new CSVMeterReadingReader();
+            _meterReadingReader = meterReadingReader;
+            _meterReadingParser = meterReadingParser;
+            _meterReadingSaver = meterReadingSaver;
         }
 
-        public async Task<int> Process(Stream fileStream)
+        public MeterReadingResponse Process(Stream fileStream)
         {
-            List<string> readings = await meterReadingReader.Read(fileStream);
+            List<string> rawReadings = _meterReadingReader.Read(fileStream);
 
-            return readings.Count;
+            List<MeterReading> meterReadings = _meterReadingParser.Parse(rawReadings);
+
+            _meterReadingSaver.Save(meterReadings);
+
+            MeterReadingResponse meterReadingResponse = new MeterReadingResponse();
+            meterReadingResponse.AllTheReadings = meterReadings;
+            meterReadingResponse.SuccessfulReadings = meterReadings.Where(m => string.IsNullOrWhiteSpace(m.ValidationFailure)).Count();
+            meterReadingResponse.FailedReadings = meterReadings.Where(m => !string.IsNullOrWhiteSpace(m.ValidationFailure)).Count();
+
+            return meterReadingResponse;
         }
     }
 }

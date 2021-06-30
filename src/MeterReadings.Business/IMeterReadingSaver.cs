@@ -1,11 +1,10 @@
 ﻿using MeterReadings.Database.Models;
 using System.Collections.Generic;
-using System.IO;
 
 namespace MeterReadings.Business
 {
-    public interface IMeterReadingProcessor
+    public interface IMeterReadingSaver
     {
-        MeterReadingResponse Process(Stream fileSteam);
+        void Save(List<MeterReading> meterReadings);
     }
 }
