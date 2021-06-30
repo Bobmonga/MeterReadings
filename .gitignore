@@ -268,3 +268,4 @@ test/MeterReadings.IntegrationTests/Response/
 test/MeterReadings.IntegrationTests/Request/
 #merge files
 *.orig
+/db/database.db
