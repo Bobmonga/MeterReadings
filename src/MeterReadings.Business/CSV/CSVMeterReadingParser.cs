@@ -44,7 +44,7 @@ namespace MeterReadings.Business.CSV
 
                 if (!DateTime.TryParse(readingParts[1], out DateTime meterReadingDateTime))
                 {
-                    meterReading.ValidationFailure = $"Invalid MeterReadingDateTime{readingParts[1]}";
+                    meterReading.ValidationFailure = $"Invalid MeterReadingDateTime {readingParts[1]}";
                     meterReadings.Add(meterReading);
                     continue;
                 }

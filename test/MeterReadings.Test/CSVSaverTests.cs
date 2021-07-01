@@ -2,7 +2,7 @@ using NUnit.Framework;
 
 namespace MeterReadings.Test
 {
-    public class Tests
+    public class CSVSaverTests
     {
         [SetUp]
         public void Setup()
@@ -10,9 +10,9 @@ namespace MeterReadings.Test
         }
 
         [Test]
-        public void Test1()
+        public void MeterReadingSuccessfullySaved()
         {
-            Assert.Pass();
+            //TODO
         }
     }
 }
