@@ -29,6 +29,11 @@ namespace MeterReadings.API.Controllers
         [HttpPost()]
         public IActionResult OnPostUpload(IFormFile meterReadingsFile)
         {
+            if (meterReadingsFile == null)
+            {
+                return BadRequest("Missing CSV file.");
+            }
+
             try
             {
                 MeterReadingResponse meterReadingResponse;
